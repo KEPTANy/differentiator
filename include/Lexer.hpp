@@ -7,7 +7,7 @@
 enum class TokenType {
   END, // indicates that there are no more tokens
 
-  OPERATOR,  // +, -, *, /, =, (, )
+  OPERATOR,  // +, -, *, ^, /, =, (, )
   SYMBOL, // function or variable
   NUMBER, // number literal
 

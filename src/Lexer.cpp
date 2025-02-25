@@ -12,7 +12,7 @@ Token Lexer::get_next_token() {
     return Token(TokenType::END, {});
   }
 
-  if (std::strchr("+-*/=()", source[pos]) != nullptr) {
+  if (std::strchr("+-*/^=()", source[pos]) != nullptr) {
     return {TokenType::OPERATOR, {source.data() + pos++, 1}};
   }
 
