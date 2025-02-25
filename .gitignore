@@ -4,4 +4,6 @@ compile_commands.json
 
 # C++
 build/
+test/test_runner
 differentiator
+*.a
