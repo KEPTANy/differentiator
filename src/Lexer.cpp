@@ -36,7 +36,9 @@ Token Lexer::get_next_token() {
       pos++;
     }
 
-    return {TokenType::NUMBER, {source.data() + start, pos - start}};
+    if (source[pos - 1] != '.') {
+      return {TokenType::NUMBER, {source.data() + start, pos - start}};
+    }
   }
   
   return {TokenType::BAD_TOKEN, {source.data() + pos++, 1}};
