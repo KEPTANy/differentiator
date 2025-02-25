@@ -24,7 +24,9 @@ public:
   explicit Lexer(std::string expr);
   Token get_next_token();
 
+#ifndef DIFFERENTIATOR_TEST_PRIVATE
 private:
+#endif
   std::string source;
   std::size_t pos;
 
