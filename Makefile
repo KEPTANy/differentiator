@@ -15,7 +15,7 @@ CPPFLAGS     := -MMD -MP -I$(INCLUDE_DIR)/
 
 RM           := rm -f 
 
-.PHONY: all clean fclean re check-format
+.PHONY: all clean fclean re check-format get-dependencies
 .PRECIOUS: $(BUILD_DIR)/%.o $(BUILD_DIR)/%.d
 
 $(BUILD_DIR)/%.o: %.cpp
@@ -36,6 +36,9 @@ fclean: clean
 re:
 	$(MAKE) fclean
 	$(MAKE) all
+
+get-dependencies:
+	git submodule update --init --recursive
 
 check-format:
 	clang-format --dry-run --Werror $(shell find $(SRC_DIR) $(INCLUDE_DIR) \
