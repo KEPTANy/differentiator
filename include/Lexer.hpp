@@ -17,6 +17,9 @@ private:
   std::string_view source;
   std::size_t pos;
 
+  Token get_symbol_token();
+  Token get_number_token();
+
   void skip_whitespace();
 };
 

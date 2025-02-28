@@ -12,28 +12,11 @@ Token Lexer::get_next_token() {
   }
 
   if (std::isalpha(source[pos])) {
-    std::size_t start = pos;
-    while (pos < source.size() && std::isalpha(source[pos])) {
-      pos++;
-    }
-
-    return {TokenType::SYMBOL, {source.data() + start, pos - start}};
+    return get_symbol_token();
   }
 
   if (std::isdigit(source[pos])) {
-    std::size_t start = pos;
-    bool has_dot = false;
-    while (pos < source.size() &&
-           (std::isdigit(source[pos]) || (!has_dot && source[pos] == '.'))) {
-      if (source[pos] == '.') {
-        has_dot = true;
-      }
-      pos++;
-    }
-
-    if (source[pos - 1] != '.') {
-      return {TokenType::NUMBER, {source.data() + start, pos - start}};
-    }
+    return get_number_token();
   }
 
   Token tok{TokenType::BAD_TOKEN, {source.data() + pos++, 1}};
@@ -65,6 +48,33 @@ Token Lexer::get_next_token() {
   }
 
   return tok;
+}
+
+Token Lexer::get_symbol_token() {
+  std::size_t start{pos};
+  while (pos < source.size() && std::isalpha(source[pos])) {
+    pos++;
+  }
+
+  return {TokenType::SYMBOL, {source.data() + start, pos - start}};
+}
+
+Token Lexer::get_number_token() {
+  std::size_t start{pos};
+  while (pos < source.size() && std::isdigit(source[pos])) {
+    pos++;
+  }
+
+  if (pos < source.size() && source[pos] == '.') {
+    pos++;
+
+    while (pos < source.size() && std::isdigit(source[pos])) {
+      pos++;
+    }
+  }
+
+  return {source[pos - 1] != '.' ? TokenType::NUMBER : TokenType::BAD_TOKEN,
+          {source.data() + start, pos - start}};
 }
 
 void Lexer::skip_whitespace() {
