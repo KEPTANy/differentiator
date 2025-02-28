@@ -3,7 +3,7 @@
 #include <cctype>
 #include <cstring>
 
-Lexer::Lexer(std::string expr) : source{expr}, pos{0} {}
+Lexer::Lexer(std::string_view expr) : source{expr}, pos{0} {}
 
 Token Lexer::get_next_token() {
   skip_whitespace();

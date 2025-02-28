@@ -8,7 +8,7 @@ TEST_CASE("Lexer") {
 
   Lexer lexer("");
 
-  auto tokens = [&lexer](std::string expr) -> std::vector<Token> {
+  auto tokens = [&lexer](std::string_view expr) -> std::vector<Token> {
     std::vector<Token> res;
     lexer = Lexer(expr);
     do {
