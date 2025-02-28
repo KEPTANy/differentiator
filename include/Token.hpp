@@ -6,7 +6,15 @@
 enum class TokenType {
   END, // indicates that there are no more tokens
 
-  OPERATOR,  // +, -, *, ^, /, =, (, )
+  PLUS,
+  MINUS,
+  STAR,
+  SLASH,
+  POW,
+  LPAR,
+  RPAR,
+  EQ,
+
   SYMBOL, // function or variable
   NUMBER, // number literal
 

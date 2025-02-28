@@ -1,7 +1,6 @@
 #include "Lexer.hpp"
 
 #include <cctype>
-#include <cstring>
 
 Lexer::Lexer(std::string_view expr) : source{expr}, pos{0} {}
 
@@ -10,10 +9,6 @@ Token Lexer::get_next_token() {
 
   if (pos >= source.size()) {
     return Token(TokenType::END, {});
-  }
-
-  if (std::strchr("+-*/^=()", source[pos]) != nullptr) {
-    return {TokenType::OPERATOR, {source.data() + pos++, 1}};
   }
 
   if (std::isalpha(source[pos])) {
@@ -40,8 +35,36 @@ Token Lexer::get_next_token() {
       return {TokenType::NUMBER, {source.data() + start, pos - start}};
     }
   }
-  
-  return {TokenType::BAD_TOKEN, {source.data() + pos++, 1}};
+
+  Token tok{TokenType::BAD_TOKEN, {source.data() + pos++, 1}};
+  switch (source[pos - 1]) {
+  case '+':
+    tok.type = TokenType::PLUS;
+    break;
+  case '-':
+    tok.type = TokenType::MINUS;
+    break;
+  case '*':
+    tok.type = TokenType::STAR;
+    break;
+  case '/':
+    tok.type = TokenType::SLASH;
+    break;
+  case '^':
+    tok.type = TokenType::POW;
+    break;
+  case '(':
+    tok.type = TokenType::LPAR;
+    break;
+  case ')':
+    tok.type = TokenType::RPAR;
+    break;
+  case '=':
+    tok.type = TokenType::EQ;
+    break;
+  }
+
+  return tok;
 }
 
 void Lexer::skip_whitespace() {

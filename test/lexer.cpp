@@ -1,6 +1,7 @@
 #include "doctest.h"
 
 #include "Lexer.hpp"
+
 #include <vector>
 
 TEST_CASE("Lexer") {
@@ -35,8 +36,8 @@ TEST_CASE("Lexer") {
 
   auto a = tokens("123141x*ln(10)^x^x");
   CHECK(types(a) == std::vector<TokenType>{
-    NUMBER, SYMBOL, OPERATOR, SYMBOL, OPERATOR, NUMBER,
-    OPERATOR, OPERATOR, SYMBOL, OPERATOR, SYMBOL, END
+    NUMBER, SYMBOL, STAR, SYMBOL, LPAR, NUMBER,
+    RPAR, POW, SYMBOL, POW, SYMBOL, END
   });
 
   CHECK(views(a) == std::vector<std::string_view>{
@@ -45,8 +46,8 @@ TEST_CASE("Lexer") {
 
   a = tokens("sqrt(x*y^z)/1442.03");
   CHECK(types(a) == std::vector<TokenType>{
-    SYMBOL, OPERATOR, SYMBOL, OPERATOR, SYMBOL, OPERATOR,
-    SYMBOL, OPERATOR, OPERATOR, NUMBER, END
+    SYMBOL, LPAR, SYMBOL, STAR, SYMBOL, POW,
+    SYMBOL, RPAR, SLASH, NUMBER, END
   });
 
   CHECK(views(a) == std::vector<std::string_view>{
