@@ -1,5 +1,4 @@
-#ifndef DIFFERENTIATOR_TOKEN_HPP
-#define DIFFERENTIATOR_TOKEN_HPP
+#pragma once
 
 #include <string_view>
 
@@ -25,5 +24,3 @@ struct Token {
   TokenType type;
   std::string_view str;
 };
-
-#endif

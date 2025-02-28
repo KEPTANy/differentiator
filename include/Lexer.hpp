@@ -1,5 +1,4 @@
-#ifndef DIFFERENTIATOR_LEXER_HPP
-#define DIFFERENTIATOR_LEXER_HPP
+#pragma once
 
 #include <cstddef>
 #include <string_view>
@@ -22,5 +21,3 @@ private:
 
   void skip_whitespace();
 };
-
-#endif
