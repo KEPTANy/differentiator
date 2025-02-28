@@ -4,20 +4,7 @@
 #include <cstddef>
 #include <string>
 
-enum class TokenType {
-  END, // indicates that there are no more tokens
-
-  OPERATOR,  // +, -, *, ^, /, =, (, )
-  SYMBOL, // function or variable
-  NUMBER, // number literal
-
-  BAD_TOKEN // generated in case of an error
-};
-
-struct Token {
-  TokenType type;
-  std::string_view str;
-};
+#include "Token.hpp"
 
 class Lexer {
 public:
