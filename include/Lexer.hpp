@@ -17,8 +17,8 @@ public:
 #ifndef DIFFERENTIATOR_TEST_PRIVATE
 private:
 #endif
-  std::size_t pos;
   std::string source{};
+  std::size_t pos{};
   std::stack<Token> reserved{};
 
   Token get_symbol_token();
