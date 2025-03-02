@@ -5,6 +5,12 @@
 Lexer::Lexer(std::string expr) : source{expr}, pos{0} {}
 
 Token Lexer::get_next_token() {
+  if (!reserved.empty()) {
+    Token res{reserved.top()};
+    reserved.pop();
+    return res;
+  }
+
   skip_whitespace();
 
   if (pos >= source.size()) {

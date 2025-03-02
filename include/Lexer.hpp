@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstddef>
+#include <stack>
 #include <string>
 
 #include "Token.hpp"
@@ -11,11 +12,14 @@ public:
 
   Token get_next_token();
 
+  void put_back(Token token);
+
 #ifndef DIFFERENTIATOR_TEST_PRIVATE
 private:
 #endif
   std::size_t pos;
   std::string source{};
+  std::stack<Token> reserved{};
 
   Token get_symbol_token();
   Token get_number_token();
