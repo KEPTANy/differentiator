@@ -2,13 +2,13 @@
 
 #include <cctype>
 
-Lexer::Lexer(std::string_view expr) : source{expr}, pos{0} {}
+Lexer::Lexer(std::string expr) : source{expr}, pos{0} {}
 
 Token Lexer::get_next_token() {
   skip_whitespace();
 
   if (pos >= source.size()) {
-    return Token(TokenType::END, {});
+    return Token{TokenType::END, ""};
   }
 
   if (std::isalpha(source[pos])) {
@@ -19,7 +19,7 @@ Token Lexer::get_next_token() {
     return get_number_token();
   }
 
-  Token tok{TokenType::BAD_TOKEN, {source.data() + pos++, 1}};
+  Token tok{TokenType::BAD_TOKEN, source.substr(pos++, 1)};
   switch (source[pos - 1]) {
   case '+':
     tok.type = TokenType::PLUS;
@@ -50,13 +50,15 @@ Token Lexer::get_next_token() {
   return tok;
 }
 
+void Lexer::put_back(Token token) { reserved.push(token); }
+
 Token Lexer::get_symbol_token() {
   std::size_t start{pos};
   while (pos < source.size() && std::isalpha(source[pos])) {
     pos++;
   }
 
-  return {TokenType::SYMBOL, {source.data() + start, pos - start}};
+  return Token{TokenType::SYMBOL, source.substr(start, pos - start)};
 }
 
 Token Lexer::get_number_token() {
@@ -73,8 +75,9 @@ Token Lexer::get_number_token() {
     }
   }
 
-  return {source[pos - 1] != '.' ? TokenType::NUMBER : TokenType::BAD_TOKEN,
-          {source.data() + start, pos - start}};
+  return Token{source[pos - 1] != '.' ? TokenType::NUMBER
+                                      : TokenType::BAD_TOKEN,
+               source.substr(start, pos - start)};
 }
 
 void Lexer::skip_whitespace() {

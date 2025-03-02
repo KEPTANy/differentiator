@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string_view>
+#include <string>
 
 enum class TokenType {
   END, // indicates that there are no more tokens
@@ -22,5 +22,5 @@ enum class TokenType {
 
 struct Token {
   TokenType type;
-  std::string_view str;
+  std::string str{};
 };

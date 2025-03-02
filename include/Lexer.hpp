@@ -1,20 +1,21 @@
 #pragma once
 
 #include <cstddef>
-#include <string_view>
+#include <string>
 
 #include "Token.hpp"
 
 class Lexer {
 public:
-  explicit Lexer(std::string_view expr);
+  Lexer(std::string expr);
+
   Token get_next_token();
 
 #ifndef DIFFERENTIATOR_TEST_PRIVATE
 private:
 #endif
-  std::string_view source;
   std::size_t pos;
+  std::string source{};
 
   Token get_symbol_token();
   Token get_number_token();

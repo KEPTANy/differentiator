@@ -9,7 +9,7 @@ TEST_CASE("Lexer") {
 
   Lexer lexer("");
 
-  auto tokens = [&lexer](std::string_view expr) -> std::vector<Token> {
+  auto tokens = [&lexer](std::string expr) -> std::vector<Token> {
     std::vector<Token> res;
     lexer = Lexer(expr);
     do {
@@ -26,8 +26,8 @@ TEST_CASE("Lexer") {
     return res;
   };
 
-  auto views = [](std::vector<Token> toks) -> std::vector<std::string_view> {
-    std::vector<std::string_view> res;
+  auto strings = [](std::vector<Token> toks) -> std::vector<std::string> {
+    std::vector<std::string> res;
     for (auto t : toks) {
       res.emplace_back(t.str);
     }
@@ -40,7 +40,7 @@ TEST_CASE("Lexer") {
     RPAR, POW, SYMBOL, POW, SYMBOL, END
   });
 
-  CHECK(views(a) == std::vector<std::string_view>{
+  CHECK(strings(a) == std::vector<std::string>{
     "123141", "x", "*", "ln", "(", "10", ")", "^", "x", "^", "x", {}
   });
 
@@ -50,7 +50,7 @@ TEST_CASE("Lexer") {
     SYMBOL, RPAR, SLASH, NUMBER, END
   });
 
-  CHECK(views(a) == std::vector<std::string_view>{
+  CHECK(strings(a) == std::vector<std::string>{
     "sqrt", "(", "x", "*", "y", "^", "z", ")", "/", "1442.03", {}
   });
 
