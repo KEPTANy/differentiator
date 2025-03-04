@@ -2,7 +2,11 @@
 
 #include <cctype>
 
-Lexer::Lexer(std::string expr) : source{expr}, pos{0} {}
+Lexer::Lexer(std::string expr) : source{expr}, pos{0} {
+  for (auto &c : source) {
+    c = std::tolower(c);
+  }
+}
 
 Token Lexer::get_next_token() {
   if (!reserved.empty()) {
