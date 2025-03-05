@@ -7,7 +7,7 @@ LIB_DIR      := lib
 SRC_DIR      := src
 TEST_DIR     := test
 
-SRCS         := $(SRC_DIR)/Lexer.cpp
+SRCS         := $(filter-out $(SRC_DIR)/main.cpp,$(wildcard $(SRC_DIR)/*.cpp))
 SRC_MAIN     := $(SRC_DIR)/main.cpp
 OBJS         := $(SRCS:%.cpp=$(BUILD_DIR)/%.o)
 OBJ_MAIN     := $(SRC_MAIN:%.cpp=$(BUILD_DIR)/%.o)
