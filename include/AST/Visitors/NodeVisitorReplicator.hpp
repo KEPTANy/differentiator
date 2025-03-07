@@ -17,7 +17,7 @@ public:
   void visit(const NodeVariable &node) override;
 
 #ifndef DIFFERENTIATOR_TEST_PRIVATE
-private:
+protected:
 #endif
   std::unique_ptr<Node> res{};
 };
