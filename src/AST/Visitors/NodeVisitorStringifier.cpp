@@ -29,6 +29,9 @@ void NodeVisitorStringifier::visit(const NodeBinary &node) {
   case TokenType::SLASH:
     res = '(' + l + ")/(" + r + ')';
     break;
+  case TokenType::POW:
+    res = '(' + l + ")^(" + r + ')';
+    break;
   default:
     throw "Unknown binary operation";
   }

@@ -31,6 +31,9 @@ void NodeVisitorCollector::visit(const NodeBinary &node) {
   case TokenType::SLASH:
     res = l / r;
     break;
+  case TokenType::POW:
+    res = std::pow(l, r);
+    break;
   default:
     throw "Unknown binary operation";
   }
