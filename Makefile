@@ -7,7 +7,7 @@ LIB_DIR      := lib
 SRC_DIR      := src
 TEST_DIR     := test
 
-SRCS         := $(filter-out $(SRC_DIR)/main.cpp,$(wildcard $(SRC_DIR)/*.cpp))
+SRCS          = $(shell find $(SRC_DIR) -name '*.cpp' ! -name 'main.cpp')
 SRC_MAIN     := $(SRC_DIR)/main.cpp
 OBJS         := $(SRCS:%.cpp=$(BUILD_DIR)/%.o)
 OBJ_MAIN     := $(SRC_MAIN:%.cpp=$(BUILD_DIR)/%.o)
@@ -19,7 +19,7 @@ CPPFLAGS     := -MMD -MP -I$(INCLUDE_DIR)/
 AR           := ar
 ARFLAGS      := -r -c -s
 
-TEST_SRCS    := $(wildcard $(TEST_DIR)/*.cpp)
+TEST_SRCS     = $(shell find $(SRC_DIR) -name '*.cpp')
 TEST_OBJS    := $(TEST_SRCS:%.cpp=$(BUILD_DIR)/%.o)
 TEST_FLAGS   := -I$(LIB_DIR)/doctest/doctest/ -DDIFFERENTIATOR_TEST_PRIVATE
 TEST_TARGET  := $(TEST_DIR)/test_runner
@@ -43,9 +43,8 @@ $(BUILD_DIR)/$(TEST_DIR)/%.o: $(TEST_DIR)/%.cpp get-dependencies
 $(TARGET_LIB): $(OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 
-$(TARGET): $(TARGET_LIB) $(OBJ_MAIN)
+$(TARGET): $(OBJ_MAIN) $(TARGET_LIB)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $@
-
 
 $(TEST_TARGET): $(TEST_OBJS) $(TARGET_LIB)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -o $@ $^
