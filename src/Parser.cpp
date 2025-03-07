@@ -61,18 +61,24 @@ std::unique_ptr<Node> Parser::unary() {
   return mul();
 }
 
-// TODO: Need to add an ability to parse implicit multiplications
 std::unique_ptr<Node> Parser::mul() {
   auto left{pow()};
 
-  auto tok{get_next_token()};
-  while (tok.type == TokenType::STAR || tok.type == TokenType::SLASH) {
-    left = std::make_unique<NodeBinary>(std::move(left), tok.type, pow());
-
-    tok = get_next_token();
+  while (true) {
+    auto tok{get_next_token()};
+    if (tok.type == TokenType::STAR || tok.type == TokenType::SLASH) {
+      left = std::make_unique<NodeBinary>(std::move(left), tok.type, pow());
+    } else if (tok.type == TokenType::SYMBOL || tok.type == TokenType::LPAR) {
+      // if there's no tokens inbetween two pow expressions, TokenType::STAR is
+      // implied. right side is never a number.
+      put_back(tok);
+      left =
+          std::make_unique<NodeBinary>(std::move(left), TokenType::STAR, pow());
+    } else {
+      put_back(tok);
+      break;
+    }
   }
-
-  put_back(tok);
 
   return left;
 }
