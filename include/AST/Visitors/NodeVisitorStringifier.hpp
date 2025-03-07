@@ -20,4 +20,5 @@ public:
 private:
 #endif
   std::string res{};
+  int precedence{};
 };
