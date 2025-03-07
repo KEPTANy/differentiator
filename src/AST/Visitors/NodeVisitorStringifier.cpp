@@ -1,5 +1,7 @@
 #include "AST/Visitors/NodeVisitorStringifier.hpp"
 
+#include <format>
+
 #include "AST/Node.hpp"
 #include "AST/NodeBinary.hpp"
 #include "AST/NodeFunction.hpp"
@@ -58,15 +60,7 @@ void NodeVisitorStringifier::visit(const NodeUnary &node) {
 
 void NodeVisitorStringifier::visit(const NodeValue &node) {
   auto val{node.get_val()};
-  if (val == 0.0) {
-    res = "0";
-  } else if (val.real() == 0.0) {
-    res = std::to_string(val.imag()) + 'i';
-  } else if (val.imag() == 0.0) {
-    res = std::to_string(val.real());
-  } else {
-    res = std::to_string(val.real()) + '+' + std::to_string(val.imag()) + 'i';
-  }
+  res = std::format("{}+{}i", val.real(), val.imag());
 }
 
 void NodeVisitorStringifier::visit(const NodeVariable &node) {
