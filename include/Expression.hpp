@@ -15,7 +15,8 @@ public:
   Expression(Expression &&other) = default;
   Expression &operator=(Expression &&other) = default;
 
-  template<typename T> requires std::convertible_to<T, std::complex<double>>
+  template <typename T>
+    requires std::convertible_to<T, std::complex<double>>
   Expression(T val) : expr{std::make_unique<NodeValue>(val)} {}
 
   Expression();

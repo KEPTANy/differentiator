@@ -5,9 +5,9 @@
 
 #include "AST/Node.hpp"
 #include "AST/NodeBinary.hpp"
+#include "AST/NodeFunction.hpp"
 #include "AST/NodeUnary.hpp"
 #include "AST/NodeValue.hpp"
-#include "AST/NodeFunction.hpp"
 #include "AST/NodeVariable.hpp"
 
 Parser::Parser(std::string expr) : Lexer{expr} {}

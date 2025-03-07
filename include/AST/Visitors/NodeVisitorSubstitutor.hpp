@@ -2,8 +2,8 @@
 
 #include <memory>
 
-#include "AST/Visitors/NodeVisitor.hpp"
 #include "AST/Node.hpp"
+#include "AST/Visitors/NodeVisitor.hpp"
 
 class NodeVisitorSubstitutor : public NodeVisitor {
 public:

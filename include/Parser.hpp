@@ -2,8 +2,8 @@
 
 #include <memory>
 
-#include "Lexer.hpp"
 #include "AST/Node.hpp"
+#include "Lexer.hpp"
 
 class Parser : private Lexer {
 public:

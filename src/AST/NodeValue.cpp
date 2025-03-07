@@ -1,6 +1,7 @@
 #include "AST/NodeValue.hpp"
 
-NodeValue::NodeValue(std::complex<double> val) : Node(TokenType::NUMBER), val{val} {}
+NodeValue::NodeValue(std::complex<double> val)
+    : Node(TokenType::NUMBER), val{val} {}
 
 void NodeValue::accept(NodeVisitor &v) const { v.visit(*this); }
 

@@ -15,7 +15,8 @@ void NodeVisitorReplicator::visit(const NodeBinary &node) {
   node.get_right_expr().accept(*this);
   auto r{result()};
 
-  res = std::make_unique<NodeBinary>(std::move(l), node.get_type(), std::move(r));
+  res =
+      std::make_unique<NodeBinary>(std::move(l), node.get_type(), std::move(r));
 }
 
 void NodeVisitorReplicator::visit(const NodeFunction &node) {
