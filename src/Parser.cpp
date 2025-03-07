@@ -22,8 +22,8 @@ std::unique_ptr<Node> Parser::parse_expression() {
 
 std::pair<std::string, std::unique_ptr<Node>> Parser::parse_assignment() {
   auto v{get_next_token()};
-  auto eq{get_next_token()};
 
+  auto eq{get_next_token()};
   if (eq.type != TokenType::EQ || v.type != TokenType::SYMBOL ||
       v.str == "sin" || v.str == "cos" || v.str == "exp" || v.str == "ln") {
     throw std::invalid_argument("Can not parse assignment");
@@ -36,7 +36,7 @@ std::pair<std::string, std::unique_ptr<Node>> Parser::parse_assignment() {
 std::unique_ptr<Node> Parser::expr() { return sum(); }
 
 std::unique_ptr<Node> Parser::sum() {
-  auto left{mul()};
+  auto left{unary()};
 
   auto tok{get_next_token()};
   while (tok.type == TokenType::PLUS || tok.type == TokenType::MINUS) {
@@ -48,6 +48,17 @@ std::unique_ptr<Node> Parser::sum() {
   put_back(tok);
 
   return left;
+}
+
+std::unique_ptr<Node> Parser::unary() {
+  auto tok{get_next_token()};
+  if (tok.type == TokenType::MINUS) {
+    return std::make_unique<NodeUnary>(tok.type, mul());
+  }
+
+  put_back(tok);
+
+  return mul();
 }
 
 // TODO: Need to add an ability to parse implicit multiplications
@@ -67,9 +78,9 @@ std::unique_ptr<Node> Parser::mul() {
 }
 
 std::unique_ptr<Node> Parser::pow() {
-  auto left{unary()};
-  auto tok{get_next_token()};
+  auto left{primary()};
 
+  auto tok{get_next_token()};
   if (tok.type == TokenType::POW) {
     return std::make_unique<NodeBinary>(std::move(left), tok.type, pow());
   }
@@ -77,17 +88,6 @@ std::unique_ptr<Node> Parser::pow() {
   put_back(tok);
 
   return left;
-}
-
-std::unique_ptr<Node> Parser::unary() {
-  auto tok{get_next_token()};
-  if (tok.type == TokenType::MINUS) {
-    return std::make_unique<NodeUnary>(tok.type, unary());
-  }
-
-  put_back(tok);
-
-  return primary();
 }
 
 std::unique_ptr<Node> Parser::primary() {
@@ -116,9 +116,7 @@ std::unique_ptr<Node> Parser::func_call() {
     throw std::invalid_argument("Can not parse function call");
   }
 
-  auto arg{group()};
-
-  return std::make_unique<NodeFunction>(name.str, std::move(arg));
+  return std::make_unique<NodeFunction>(name.str, group());
 }
 
 std::unique_ptr<Node> Parser::group() {
