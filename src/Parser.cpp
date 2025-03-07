@@ -24,7 +24,7 @@ std::pair<std::string, std::unique_ptr<Node>> Parser::parse_assignment() {
   auto v{get_next_token()};
 
   auto eq{get_next_token()};
-  if (eq.type != TokenType::EQ || v.type != TokenType::SYMBOL ||
+  if (eq.type != TokenType::EQ || v.type != TokenType::SYMBOL || v.str == "i" ||
       v.str == "sin" || v.str == "cos" || v.str == "exp" || v.str == "ln") {
     throw std::invalid_argument("Can not parse assignment");
   }
@@ -108,6 +108,9 @@ std::unique_ptr<Node> Parser::primary() {
         tok.str == "ln") {
       put_back(tok);
       return func_call();
+    }
+    if (tok.str == "i") {
+      return std::make_unique<NodeValue>(std::complex<double>(0.0, 1.0));
     }
     return std::make_unique<NodeVariable>(tok.str);
   }
