@@ -95,18 +95,18 @@ void NodeVisitorStringifier::visit(const NodeValue &node) {
   auto imag{val.imag()};
   if (real != 0 && imag != 0) {
     precedence = prec(TokenType::PLUS); // string has an addition
-    res = std::format("{}+{}*i", real, imag);
+    res = std::format("{:.3f}+{:.3f}*i", real, imag);
     return;
   }
 
   if (imag != 0) {
     precedence = prec(TokenType::STAR); // string has a multiplication
-    res = std::format("{}*i", imag);
+    res = std::format("{:.3f}*i", imag);
     return;
   }
 
   precedence = prec(TokenType::NUMBER); // only a number
-  res = std::format("{}", real);
+  res = std::format("{:.3f}", real);
 }
 
 void NodeVisitorStringifier::visit(const NodeVariable &node) {
