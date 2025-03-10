@@ -29,6 +29,7 @@ public:
   std::string to_string() const;
   std::complex<double> collect() const;
   Expression substitute(std::string var_name, const Expression &expr) const;
+  Expression simplify() const;
 
   Expression operator+(const Expression &rhs) const;
   Expression &operator+=(const Expression &rhs);

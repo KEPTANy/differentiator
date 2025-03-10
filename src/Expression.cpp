@@ -5,6 +5,7 @@
 #include "AST/NodeUnary.hpp"
 #include "AST/Visitors/NodeVisitorCollector.hpp"
 #include "AST/Visitors/NodeVisitorReplicator.hpp"
+#include "AST/Visitors/NodeVisitorSimplifier.hpp"
 #include "AST/Visitors/NodeVisitorStringifier.hpp"
 #include "AST/Visitors/NodeVisitorSubstitutor.hpp"
 #include "Parser.hpp"
@@ -46,6 +47,12 @@ std::complex<double> Expression::collect() const {
 Expression Expression::substitute(std::string var_name,
                                   const Expression &expr) const {
   NodeVisitorSubstitutor vis{var_name, *expr.expr};
+  get_expr().accept(vis);
+  return vis.result();
+}
+
+Expression Expression::simplify() const {
+  NodeVisitorSimplifier vis{};
   get_expr().accept(vis);
   return vis.result();
 }
