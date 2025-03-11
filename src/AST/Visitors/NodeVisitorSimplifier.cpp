@@ -80,7 +80,7 @@ void NodeVisitorSimplifier::visit(const NodeUnary &node) {
   // if an argument is a number, compute value directly
   if (auto raw_arg{dynamic_cast<const NodeValue *>(arg.get())}) {
     if (node.get_type() == TokenType::MINUS) {
-      res = std::make_unique<NodeValue>(std::sin(raw_arg->get_val()));
+      res = std::make_unique<NodeValue>(-raw_arg->get_val());
     } else {
       throw std::invalid_argument("Unknown unary operation");
     }
