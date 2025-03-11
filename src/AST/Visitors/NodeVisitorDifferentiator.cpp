@@ -100,7 +100,8 @@ void NodeVisitorDifferentiator::visit(const NodeBinary &node) {
     auto group{std::make_unique<NodeBinary>(
         std::move(left_term), TokenType::PLUS, std::move(right_term))};
 
-    res = std::make_unique<NodeBinary>(std::move(l_pow_r), TokenType::STAR, std::move(group));
+    res = std::make_unique<NodeBinary>(std::move(l_pow_r), TokenType::STAR,
+                                       std::move(group));
   } else {
     throw std::invalid_argument("Unknown binary operation");
   }

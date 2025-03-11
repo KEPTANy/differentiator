@@ -58,7 +58,6 @@ void diff(Target &t) {
                "\t" << expr.to_string() << "\n";
 
   std::cout << "########################\n";
-  // clang-format on
 
   expr = expr.diff(wrt);
   std::cout << "Differentiated: \n"
@@ -68,6 +67,7 @@ void diff(Target &t) {
   std::cout << "After simplifications:\n"
                "\t" << expr.to_string() << "\n"
                "------------------------\n";
+  // clang-format on
 
   std::cout << "Final result: " << expr.to_string() << "\n";
 }
@@ -113,15 +113,19 @@ void eval(Target &t) {
     auto [s, e] = subs[i];
 
     std::cout << "Substitution: \n"
-                 "\t" << s << " = " << e.to_string() << "\n";
+                 "\t"
+              << s << " = " << e.to_string() << "\n";
 
     expr = expr.substitute(s, e);
     std::cout << "Expression after substitution:\n"
-                 "\t" << expr.to_string() << "\n";
+                 "\t"
+              << expr.to_string() << "\n";
 
     expr = expr.simplify();
     std::cout << "After simplifications:\n"
-                 "\t" << expr.to_string() << "\n"
+                 "\t"
+              << expr.to_string()
+              << "\n"
                  "------------------------\n";
   }
 

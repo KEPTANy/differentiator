@@ -4,11 +4,11 @@
 #include "AST/NodeFunction.hpp"
 #include "AST/NodeUnary.hpp"
 #include "AST/Visitors/NodeVisitorCollector.hpp"
+#include "AST/Visitors/NodeVisitorDifferentiator.hpp"
 #include "AST/Visitors/NodeVisitorReplicator.hpp"
 #include "AST/Visitors/NodeVisitorSimplifier.hpp"
 #include "AST/Visitors/NodeVisitorStringifier.hpp"
 #include "AST/Visitors/NodeVisitorSubstitutor.hpp"
-#include "AST/Visitors/NodeVisitorDifferentiator.hpp"
 #include "Parser.hpp"
 #include "Token.hpp"
 
