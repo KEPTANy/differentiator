@@ -95,7 +95,7 @@ void NodeVisitorStringifier::visit(const NodeValue &node) {
   auto imag{val.imag()};
   if (real != 0 && imag != 0) {
     precedence = prec(TokenType::PLUS); // string has an addition
-    res = std::format("{:.3f}+{:.3f}*i", real, imag);
+    res = std::format("{:.3f}{}{:.3f}*i", real, imag > 0 ? '+' : '-', std::abs(imag));
     return;
   }
 
