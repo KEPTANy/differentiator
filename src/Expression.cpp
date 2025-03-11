@@ -8,6 +8,7 @@
 #include "AST/Visitors/NodeVisitorSimplifier.hpp"
 #include "AST/Visitors/NodeVisitorStringifier.hpp"
 #include "AST/Visitors/NodeVisitorSubstitutor.hpp"
+#include "AST/Visitors/NodeVisitorDifferentiator.hpp"
 #include "Parser.hpp"
 #include "Token.hpp"
 
@@ -53,6 +54,12 @@ Expression Expression::substitute(std::string var_name,
 
 Expression Expression::simplify() const {
   NodeVisitorSimplifier vis{};
+  get_expr().accept(vis);
+  return vis.result();
+}
+
+Expression Expression::diff(std::string wrt) const {
+  NodeVisitorDifferentiator vis{wrt};
   get_expr().accept(vis);
   return vis.result();
 }

@@ -30,6 +30,7 @@ public:
   std::complex<double> collect() const;
   Expression substitute(std::string var_name, const Expression &expr) const;
   Expression simplify() const;
+  Expression diff(std::string wrt) const;
 
   Expression operator+(const Expression &rhs) const;
   Expression &operator+=(const Expression &rhs);
