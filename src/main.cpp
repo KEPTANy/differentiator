@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+#include "AST/NodeVariable.hpp"
 #include "Expression.hpp"
 #include "Parser.hpp"
 
@@ -26,9 +27,49 @@ struct Target {
   std::string wrt{};
 };
 
-void diff(Target &) {
-  std::cout << "Can not diff yet";
-  exit(EXIT_FAILURE);
+void diff(Target &t) {
+  Expression expr;
+  try {
+    expr = t.expr;
+  } catch (...) {
+    std::cout << "Failed to parse \"" << t.expr << "\"\n";
+    exit(EXIT_FAILURE);
+  }
+
+  std::string wrt;
+  try {
+    Expression temp(t.wrt);
+    wrt = dynamic_cast<const NodeVariable &>(temp.get_expr()).get_name();
+  } catch (...) {
+    std::cout << "Failed to parse \"" << t.wrt << "\"\n";
+    exit(EXIT_FAILURE);
+  }
+
+  // clang-format off
+  std::cout << "Operation: diff\n"
+               "With respect to:\n"
+               "\t" << wrt << "\n"
+               "Expression:\n"
+               "\t" << expr.to_string() << "\n";
+
+  expr = expr.simplify();
+
+  std::cout << "Simplified:\n"
+               "\t" << expr.to_string() << "\n";
+
+  std::cout << "########################\n";
+  // clang-format on
+
+  expr = expr.diff(wrt);
+  std::cout << "Differentiated: \n"
+               "\t" << expr.to_string() << "\n";
+
+  expr = expr.simplify();
+  std::cout << "After simplifications:\n"
+               "\t" << expr.to_string() << "\n"
+               "------------------------\n";
+
+  std::cout << "Final result: " << expr.to_string() << "\n";
 }
 
 void eval(Target &t) {
