@@ -19,7 +19,7 @@ CPPFLAGS     := -MMD -MP -I$(INCLUDE_DIR)/
 AR           := ar
 ARFLAGS      := -r -c -s
 
-TEST_SRCS     = $(shell find $(SRC_DIR) -name '*.cpp')
+TEST_SRCS     = $(shell find $(TEST_DIR) -name '*.cpp')
 TEST_OBJS    := $(TEST_SRCS:%.cpp=$(BUILD_DIR)/%.o)
 TEST_FLAGS   := -I$(LIB_DIR)/doctest/doctest/ -DDIFFERENTIATOR_TEST_PRIVATE
 TEST_TARGET  := $(TEST_DIR)/test_runner
